@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebsiteMVC.Models.GiaDien>
+@{
+    ViewBag.Title = "DANH SÁCH GIÁ ĐIỆN";
+    Layout = "~/Areas/AdminCP/Views/Shared/_LayoutAdmin.cshtml";
+    var accept = WebsiteMVC.Models.LoginHelper.CheckRole(WebsiteMVC.Models.eRole.ADMIN);
+}
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-edit"></i>@ViewBag.Title
+        </div>
+    </div>
+    <div class="portlet-body">
+
+        @{
+            var houseNames = Model.Select(item => item.House.Name).Distinct().ToList();
+        }
+
+        @foreach (var name in houseNames)
+        {
+            <h2>@name</h2>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID Giá điện</th>
+                        <th>Phòng</th>
+                        <th>Chủ sở hữu</th>
+                        <th>Giá tiền</th>
+                        <th>Ngày tính</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(item => item.House.Name == name).OrderBy(item => item.NgayTinh))
+                    {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.IDGiaDien)</td>
+                        <td>@Html.DisplayFor(modelItem => item.House.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TaiKhoan.FullName)</td>
+                        <td>@string.Format("{0:#,##0} VNĐ", item.GiaTien)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NgayTinh)</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+@section css{
+    <link href="/Content/theme/assets/global/plugins/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+

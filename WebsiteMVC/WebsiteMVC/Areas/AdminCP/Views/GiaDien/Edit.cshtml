@@ -1,0 +1,59 @@
+﻿@model WebsiteMVC.Models.GiaDien
+
+@{
+    ViewBag.Title = "GIÁ ĐIỆN";
+    Layout = "~/Areas/AdminCP/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading"><i class="fa fa-pencil"></i> @ViewBag.Title</div>
+    <div class="panel-body">
+
+        @using (Html.BeginForm("Edit", "GiaDien", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.IDGiaDien)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IDHouse, "Mã phòng (*)", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.IDHouse, new { @class = "form-control", required = "true" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IDTaiKhoan, "Mã khách hàng (*)", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.IDTaiKhoan, new { @class = "form-control", required = "true" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GiaTien, "Giá tiền", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.GiaTien, new { @class = "form-control", required = "true" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NgayTinh, "Ngày tính", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.NgayTinh, new { required = "true", type = "date", Value = Model.NgayTinh?.ToString("yyyy-MM-dd") })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn green" />
+                    <a href="@Url.Action("Index")" class="btn btn-default"><i class="fa fa-arrow-circle-o-left"></i> QUAY LẠI DANH SÁCH</a>
+                </div>
+            </div>
+        </div>
+        }
+
+    </div>
+</div>
+
